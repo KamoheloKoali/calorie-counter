@@ -3,7 +3,9 @@
 import { revalidatePath } from "next/cache"
 import { analyzeImage } from "@/lib/gemini"
 import { utapi } from "@/lib/uploadthing"
-import { COOKIE_EXPIRATION } from "@/lib/cookies"
+import { COOKIE_EXPIRATION, GUEST_COOKIE_NAME } from "./constants"
+import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 
 // Store uploaded file IDs with their expiration times
 type UploadedFile = {
@@ -156,4 +158,23 @@ export async function uploadImage(file: File, prompt: string, guestId: string) {
     console.error("Error uploading and analyzing image:", error)
     return { error: error.message || "Failed to upload and analyze image" }
   }
+}
+
+/**
+ * Set the guest cookie and redirect to the homepage
+ */
+export async function setGuestCookie(guestId: string) {
+  // Set cookie with 2-hour expiration
+  (await cookies()).set({
+    name: GUEST_COOKIE_NAME,
+    value: guestId,
+    httpOnly: true,
+    path: "/",
+    maxAge: COOKIE_EXPIRATION,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+  })
+
+  // Redirect to homepage to apply the cookie
+  redirect("/")
 }

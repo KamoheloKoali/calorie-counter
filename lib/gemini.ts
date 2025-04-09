@@ -4,6 +4,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai"
 // Initialize the Google Generative AI client
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "")
 
+const model = genAI.getGenerativeModel({ model: 'models/gemini-1.5-pro' });
+
 /**
  * Create a prompt for Gemini to analyze a food image
  */
@@ -83,37 +85,48 @@ export async function analyzeImage(imageUrl: string, userPrompt = "") {
     const prompt = createFoodAnalysisPrompt(userPrompt)
 
     // Fetch the image as a blob
-    const imageResponse = await fetch(imageUrl)
-    const imageBlob = await imageResponse.blob()
+    const imageResponse = await fetch(imageUrl).then((response) => response.arrayBuffer());
+    // const imageBlob = await imageResponse.blob()
 
-    // Convert blob to base64
-    const imageBase64 = await new Promise<string>((resolve) => {
-      const reader = new FileReader()
-      reader.onloadend = () => resolve(reader.result as string)
-      reader.readAsDataURL(imageBlob)
-    })
+    // // Convert blob to base64
+    // const imageBase64 = await new Promise<string>((resolve) => {
+    //   const reader = new FileReader()
+    //   reader.onloadend = () => resolve(reader.result as string)
+    //   reader.readAsDataURL(imageBlob)
+    // })
 
-    // Extract the base64 data (remove the data:image/jpeg;base64, part)
-    const base64Data = imageBase64.split(",")[1]
+    // // Extract the base64 data (remove the data:image/jpeg;base64, part)
+    // const base64Data = imageBase64.split(",")[1]
 
-    // Call Gemini API with the image
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
+    // // Call Gemini API with the image
+    // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
+
+    // const result = await model.generateContent([
+    //   prompt,
+    //   {
+    //     inlineData: {
+    //       mimeType: imageBlob.type,
+    //       data: base64Data,
+    //     },
+    //   },
+    // ])
 
     const result = await model.generateContent([
-      prompt,
       {
-        inlineData: {
-          mimeType: imageBlob.type,
-          data: base64Data,
-        },
+          inlineData: {
+              data: Buffer.from(imageResponse).toString("base64"),
+              mimeType: "image/jpeg",
+          },
       },
-    ])
+      prompt,
+  ]);
 
     const response = result.response
     const text = response.text()
 
     // Parse the response
     const parsedResponse = parseGeminiResponse(text)
+    console.log(parsedResponse)
 
     return parsedResponse
   } catch (error) {

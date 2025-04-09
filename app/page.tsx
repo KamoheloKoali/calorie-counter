@@ -1,16 +1,14 @@
-import { cookies } from "next/headers"
-import { v4 as uuidv4 } from "uuid"
-import { UploadThingUploader } from "@/components/uploadthing-uploader"
-import { getGuestId, setGuestCookie } from "@/lib/cookies"
+import UploadThingUploader from "@/components/uploadthing-uploader"
+import { getGuestId } from "@/lib/cookies"
+import { redirect } from "next/navigation"
 
 export default async function Home() {
-  const cookieStore = cookies()
-  const guestId = getGuestId(cookieStore)
+  const guestId = await getGuestId()
 
   // If no guest ID exists, create one and redirect to set the cookie
   if (!guestId) {
-    const newGuestId = uuidv4()
-    return setGuestCookie(newGuestId)
+    redirect("/api/set-guest-cookie")
+    return <div className="flex w-full h-screen justify-center items-center">No guest id</div>
   }
 
   return (

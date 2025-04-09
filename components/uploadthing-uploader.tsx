@@ -1,20 +1,20 @@
 "use client"
 
-import { useCallback, useState } from "react"
-import { useRouter } from "next/navigation"
-import { UploadDropzone } from "@/lib/uploadthing-client"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent } from "@/components/ui/card"
-import { AnalysisDrawer } from "@/components/analysis-drawer"
 import { analyzeUploadedImage } from "@/lib/actions"
+import { useRouter } from "next/navigation"
+import { useCallback, useState } from "react"
+import { Card, CardContent } from "./ui/card"
+import { Label } from "./ui/label"
+import { UploadDropzone } from "@/lib/uploadthing-client"
+import { Textarea } from "./ui/textarea"
+import { Button } from "./ui/button"
+import { AnalysisDrawer } from "./analysis-drawer"
 
 interface UploadThingUploaderProps {
   guestId: string
 }
 
-export function UploadThingUploader({ guestId }: UploadThingUploaderProps) {
+export default function UploadThingUploader({ guestId }: UploadThingUploaderProps) {
   const router = useRouter()
   const [prompt, setPrompt] = useState("")
   const [isAnalyzing, setIsAnalyzing] = useState(false)
@@ -52,6 +52,8 @@ export function UploadThingUploader({ guestId }: UploadThingUploaderProps) {
         return
       }
 
+      console.log("result: ", result)
+
       setAnalysisResult(result)
       setIsDrawerOpen(true)
 
@@ -79,7 +81,7 @@ export function UploadThingUploader({ guestId }: UploadThingUploaderProps) {
               <UploadDropzone
                 endpoint="mealImageUploader"
                 onClientUploadComplete={handleUploadComplete}
-                onUploadError={(err) => {
+                onUploadError={(err: any) => {
                   setError(`Upload error: ${err.message}`)
                 }}
                 className="ut-button:bg-primary ut-button:ut-uploading:bg-primary/80 ut-label:text-muted-foreground"
