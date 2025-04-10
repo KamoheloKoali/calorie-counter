@@ -1,75 +1,84 @@
-"use client"
+"use client";
 
-import { analyzeUploadedImage } from "@/lib/actions"
-import { useRouter } from "next/navigation"
-import { useCallback, useState } from "react"
-import { Card, CardContent } from "./ui/card"
-import { Label } from "./ui/label"
-import { Textarea } from "./ui/textarea"
-import { Button } from "./ui/button"
-import { AnalysisDrawer } from "./analysis-drawer"
-import { UploadDropzone } from "@/lib/uploadthing"
+import { analyzeUploadedImage } from "@/lib/actions";
+import { useRouter } from "next/navigation";
+import { useCallback, useState } from "react";
+import { Card, CardContent } from "./ui/card";
+import { Label } from "./ui/label";
+import { Textarea } from "./ui/textarea";
+import { Button } from "./ui/button";
+import { AnalysisDrawer } from "./analysis-drawer";
+import { UploadDropzone } from "@/lib/uploadthing";
+import { X } from "lucide-react";
+import Image from "next/image";
 
 interface UploadThingUploaderProps {
-  guestId: string
+  guestId: string;
 }
 
-export default function UploadThingUploader({ guestId }: UploadThingUploaderProps) {
-  const router = useRouter()
-  const [prompt, setPrompt] = useState("")
-  const [isAnalyzing, setIsAnalyzing] = useState(false)
-  const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null)
-  const [analysisResult, setAnalysisResult] = useState<any>(null)
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+export default function UploadThingUploader({
+  guestId,
+}: UploadThingUploaderProps) {
+  const router = useRouter();
+  const [prompt, setPrompt] = useState("");
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
+  const [analysisResult, setAnalysisResult] = useState<any>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleUploadComplete = useCallback(async (res: { url: string }[]) => {
     try {
       if (res && res.length > 0) {
-        setUploadedImageUrl(res[0].url)
+        setUploadedImageUrl(res[0].url);
       }
     } catch (err) {
-      console.error("Upload error:", err)
-      setError("An error occurred during upload")
+      console.error("Upload error:", err);
+      setError("An error occurred during upload");
     }
-  }, [])
+  }, []);
 
   const handleAnalyze = async () => {
     if (!uploadedImageUrl) {
-      setError("Please upload an image first")
-      return
+      setError("Please upload an image first");
+      return;
     }
 
     try {
-      setIsAnalyzing(true)
-      setError(null)
+      setIsAnalyzing(true);
+      setError(null);
 
       // Analyze the uploaded image
-      const result = await analyzeUploadedImage(uploadedImageUrl, prompt, guestId)
+      const result = await analyzeUploadedImage(
+        uploadedImageUrl,
+        prompt,
+        guestId
+      );
 
       if (result.error) {
-        setError(result.error)
-        return
+        setError(result.error);
+        return;
       }
 
-      console.log("result: ", result)
+      console.log("result: ", result);
 
-      setAnalysisResult(result)
-      setIsDrawerOpen(true)
+      setAnalysisResult(result);
+      setIsDrawerOpen(true);
 
       // Reset form
-      setUploadedImageUrl(null)
-      setPrompt("")
+      setUploadedImageUrl(null);
+      setPrompt("");
 
       // Refresh the page to ensure we have the latest data
-      router.refresh()
+      router.refresh();
     } catch (err) {
-      console.error("Analysis error:", err)
-      setError("An error occurred during analysis. Please try again.")
+      console.error("Analysis error:", err);
+      setError("An error occurred during analysis. Please try again.");
     } finally {
-      setIsAnalyzing(false)
+      setIsAnalyzing(false);
     }
-  }
+  };
+  console.log("imageUrl: ", uploadedImageUrl);
 
   return (
     <>
@@ -77,16 +86,43 @@ export default function UploadThingUploader({ guestId }: UploadThingUploaderProp
         <CardContent className="pt-6">
           <div className="space-y-6">
             <div className="space-y-2">
-              <Label>Upload meal photo</Label>
-              <UploadDropzone
-                endpoint="mealImageUploader"
-                onClientUploadComplete={handleUploadComplete}
-                onUploadError={(err: any) => {
-                  setError(`Upload error: ${err.message}`)
-                }}
-                className="ut-button:bg-red-500 ut-button:ut-uploading:bg-red-500/80 ut-label:text-muted-foreground"
-              />
-              {uploadedImageUrl && <p className="text-sm text-green-600">Image uploaded successfully!</p>}
+              {uploadedImageUrl ? (
+                <>
+                  <div className="w-full flex justify-center">
+                    <Image
+                      src={uploadedImageUrl || ""}
+                      style={{ objectFit: "cover" }}
+                      height={300}
+                      width={400}
+                      alt="uploaded image"
+                      className="rounded-md"
+                    />
+                  </div>
+                  {/* <p className="text-sm text-green-600">
+                  Image uploaded successfully!
+                </p> */}
+                  <Button
+                    onClick={() => setUploadedImageUrl(null)}
+                    className="cursor-pointer"
+                  >
+                    <X className="h-4 w-4" />
+                    Remove Image
+                  </Button>
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <Label>Upload meal photo</Label>
+                  <UploadDropzone
+                    endpoint="mealImageUploader"
+                    onClientUploadComplete={handleUploadComplete}
+                    onUploadError={(err: any) => {
+                      setError(`Upload error: ${err.message}`);
+                    }}
+                    className="ut-button:bg-red-500 ut-button:ut-uploading:bg-red-500/80 ut-label:text-muted-foreground"
+                  />
+                </>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -102,7 +138,11 @@ export default function UploadThingUploader({ guestId }: UploadThingUploaderProp
 
             {error && <div className="text-red-500 text-sm">{error}</div>}
 
-            <Button onClick={handleAnalyze} className="w-full cursor-pointer" disabled={!uploadedImageUrl || isAnalyzing}>
+            <Button
+              onClick={handleAnalyze}
+              className="w-full cursor-pointer"
+              disabled={!uploadedImageUrl || isAnalyzing}
+            >
               {isAnalyzing ? (
                 <span className="flex items-center">
                   <span className="animate-spin mr-2">⏳</span> Analyzing...
@@ -115,7 +155,11 @@ export default function UploadThingUploader({ guestId }: UploadThingUploaderProp
         </CardContent>
       </Card>
 
-      <AnalysisDrawer isOpen={isDrawerOpen} setIsOpen={setIsDrawerOpen} analysisResult={analysisResult} />
+      <AnalysisDrawer
+        isOpen={isDrawerOpen}
+        setIsOpen={setIsDrawerOpen}
+        analysisResult={analysisResult}
+      />
     </>
-  )
+  );
 }
