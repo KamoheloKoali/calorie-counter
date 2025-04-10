@@ -102,7 +102,7 @@ export default function UploadThingUploader({ guestId }: UploadThingUploaderProp
 
             {error && <div className="text-red-500 text-sm">{error}</div>}
 
-            <Button onClick={handleAnalyze} className="w-full" disabled={!uploadedImageUrl || isAnalyzing}>
+            <Button onClick={handleAnalyze} className="w-full cursor-pointer" disabled={!uploadedImageUrl || isAnalyzing}>
               {isAnalyzing ? (
                 <span className="flex items-center">
                   <span className="animate-spin mr-2">⏳</span> Analyzing...

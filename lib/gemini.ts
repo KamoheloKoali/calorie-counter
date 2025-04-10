@@ -165,6 +165,6 @@ export async function analyzeImage(imageUrl: string, userPrompt = "") {
     return parsedResponse;
   } catch (error) {
     console.error("Error analyzing image with Gemini:", error);
-    throw new Error("Failed to analyze image");
+    throw new Error("Failed to analyze image. Rate limits reached or service unavailable😔");
   }
 }
