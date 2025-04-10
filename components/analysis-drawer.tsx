@@ -122,7 +122,7 @@ export function AnalysisDrawer({
           )}
         </ScrollArea>
 
-        <DrawerFooter className="border">
+        <DrawerFooter className="">
           <DrawerClose asChild>
             <Button className="cursor-pointer ">Close</Button>
           </DrawerClose>
