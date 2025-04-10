@@ -1,8 +1,48 @@
+# Calorie Counter
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js (v18.0.0 or higher)
+- npm or yarn or pnpm
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/KamoheloKoali/calorie-counter.git
+cd calorie-counter
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+### Environment Variables
+
+Create a `.env` file in the root of the project and add the following environment variables:
+
+```env
+UPLOADTHING_TOKEN='your_uploadthing_token'
+GEMINI_API_KEY='your_gemini_api_key'
+NEXT_PUBLIC_APP_URL='http://localhost:3000'
+```
+
+Replace `your_uploadthing_token` and `your_gemini_api_key` with your actual API keys.
+
+### Running the Development Server
+
+Run the development server:
 
 ```bash
 npm run dev
@@ -10,27 +50,59 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Building for Production
 
-## Learn More
+To create an optimized production build:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+# or
+yarn build
+# or
+pnpm build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Running in Production Mode
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+After building the project, you can start the production server:
 
-## Deploy on Vercel
+```bash
+npm run start
+# or
+yarn start
+# or
+pnpm start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Hosting
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+You can host this project on Vercel or any other hosting service that supports Next.js.
+
+#### Hosting on Vercel
+
+1. Sign up for a Vercel account if you don't have one.
+2. Install the Vercel CLI:
+
+```bash
+npm install -g vercel
+```
+
+3. Deploy the project:
+
+```bash
+vercel
+```
+
+Follow the prompts to link your project to your Vercel account and deploy it.
+
+For more details, check out the [Vercel documentation](https://vercel.com/docs).
+
+#### Hosting on Other Services
+
+Refer to the documentation of your chosen hosting service for instructions on how to deploy a Next.js application.
