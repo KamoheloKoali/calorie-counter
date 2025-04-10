@@ -1,6 +1,18 @@
 # Calorie Counter
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+A sleek and user-friendly calorie tracking app that lets users upload images of their meals and receive calorie estimates using AI. Built to simplify meal logging, the app uses image analysis to help users keep track of their daily intake—no manual entry needed.
+
+Tech Stack:
+
+    Framework: Next.js (App Router, TypeScript)
+
+    Styling: Tailwind CSS
+
+    Image Uploading: UploadThing
+
+    AI Integration: Gemini API for food image analysis and calorie estimation
+
+    Data Storage: No database (stateless, client-focused)
 
 ## Getting Started
 
