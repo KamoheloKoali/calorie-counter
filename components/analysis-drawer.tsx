@@ -40,7 +40,7 @@ export function AnalysisDrawer({ isOpen, setIsOpen, analysisResult }: AnalysisDr
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
-      <DrawerContent className="max-h-[90vh]">
+      <DrawerContent className="">
         <DrawerHeader>
           <DrawerTitle className="text-2xl">Meal Analysis Results</DrawerTitle>
           <DrawerDescription>Nutritional breakdown and calorie estimate for your meal</DrawerDescription>
@@ -96,7 +96,7 @@ export function AnalysisDrawer({ isOpen, setIsOpen, analysisResult }: AnalysisDr
 
         <DrawerFooter>
           <DrawerClose asChild>
-            <Button>Close</Button>
+            <Button className="cursor-pointer">Close</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

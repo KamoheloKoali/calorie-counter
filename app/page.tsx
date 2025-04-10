@@ -6,17 +6,15 @@ import { redirect } from "next/navigation";
 
 export default async function Home() {
   const guestId = await getGuestId()
-  console.log("guestid: ", guestId)
 
   // If no guest ID exists, create one and redirect to set the cookie
   if (!guestId) {
     redirect("/api/set-guest-cookie")
-    return <div className="flex w-full h-screen justify-center items-center">No guest id</div>
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-4 md:p-24">
-      <div className="z-10 w-full max-w-3xl items-center justify-between text-sm lg:flex">
+    <main className="flex min-h-screen flex-col items-center justify-between p-4 md:p-24 ">
+      <div className="z-10 w-full md:max-w-3xl items-center justify-between text-sm lg:flex">
         <div className="w-full">
           <h1 className="text-4xl font-bold mb-6 text-center">Meal Calorie Analyzer</h1>
           <p className="text-center mb-8 text-muted-foreground">
