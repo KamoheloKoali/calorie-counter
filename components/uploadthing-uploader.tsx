@@ -60,17 +60,17 @@ export default function UploadThingUploader({
         return;
       }
 
-      console.log("result: ", result);
+      // console.log("result: ", result);
 
       setAnalysisResult(result);
       setIsDrawerOpen(true);
 
       // Reset form
-      setUploadedImageUrl(null);
+      // setUploadedImageUrl(null);
       setPrompt("");
 
       // Refresh the page to ensure we have the latest data
-      router.refresh();
+      // router.refresh();
     } catch (err) {
       console.error("Analysis error:", err);
       setError("An error occurred during analysis. Please try again.");
@@ -78,7 +78,7 @@ export default function UploadThingUploader({
       setIsAnalyzing(false);
     }
   };
-  console.log("imageUrl: ", uploadedImageUrl);
+  // console.log("imageUrl: ", uploadedImageUrl);
 
   return (
     <>
@@ -151,6 +151,14 @@ export default function UploadThingUploader({
                 <span>Analyze Calories</span>
               )}
             </Button>
+            {analysisResult && (
+              <Button
+                onClick={()=> setIsDrawerOpen(true)}
+                className="w-full cursor-pointer"
+              >
+                  <span>Show Analysis</span>
+              </Button>
+            )}
           </div>
         </CardContent>
       </Card>
