@@ -84,7 +84,7 @@ export default function UploadThingUploader({ guestId }: UploadThingUploaderProp
                 onUploadError={(err: any) => {
                   setError(`Upload error: ${err.message}`)
                 }}
-                className="ut-button:bg-primary ut-button:ut-uploading:bg-primary/80 ut-label:text-muted-foreground"
+                className="ut-button:bg-red-500 ut-button:ut-uploading:bg-red-500/80 ut-label:text-muted-foreground"
               />
               {uploadedImageUrl && <p className="text-sm text-green-600">Image uploaded successfully!</p>}
             </div>

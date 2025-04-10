@@ -80,12 +80,12 @@ export function AnalysisDrawer({ isOpen, setIsOpen, analysisResult }: AnalysisDr
                 </div>
               )}
 
-              {formattedResult.additionalNotes && (
+              {/* {formattedResult.additionalNotes && (
                 <div>
                   <h3 className="text-lg font-medium mb-2">Additional Notes</h3>
                   <p className="text-sm">{formattedResult.additionalNotes}</p>
                 </div>
-              )}
+              )} */}
             </div>
           ) : (
             <div className="py-8 text-center">
@@ -96,7 +96,7 @@ export function AnalysisDrawer({ isOpen, setIsOpen, analysisResult }: AnalysisDr
 
         <DrawerFooter>
           <DrawerClose asChild>
-            <Button variant="outline">Close</Button>
+            <Button>Close</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

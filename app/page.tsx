@@ -1,12 +1,12 @@
 
 import UploadThingUploader from "@/components/uploadthing-uploader";
 import { getGuestId } from "@/lib/cookies";
-import { UploadButton } from "@/lib/uploadthing";
 import { redirect } from "next/navigation";
 
 
 export default async function Home() {
   const guestId = await getGuestId()
+  console.log("guestid: ", guestId)
 
   // If no guest ID exists, create one and redirect to set the cookie
   if (!guestId) {
