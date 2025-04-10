@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache"
 import { analyzeImage } from "@/lib/gemini"
-import { utapi } from "@/lib/uploadthing"
 import { COOKIE_EXPIRATION, GUEST_COOKIE_NAME } from "./constants"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
@@ -12,6 +11,7 @@ type UploadedFile = {
   fileId: string
   guestId: string
   expiresAt: Date
+  fileUrl: string;
 }
 
 // In-memory store for uploaded files (in production, use a database)
@@ -38,10 +38,11 @@ export async function registerUploadedFile(fileUrl: string, guestId: string) {
       fileId,
       guestId,
       expiresAt,
+      fileUrl,
     })
 
     // Schedule cleanup for this file
-    scheduleFileCleanup(fileId, expiresAt)
+    scheduleFileCleanup(fileId, expiresAt, fileUrl)
 
     return { success: true }
   } catch (error) {
@@ -53,14 +54,22 @@ export async function registerUploadedFile(fileUrl: string, guestId: string) {
 /**
  * Schedule cleanup for a file after its expiration time
  */
-function scheduleFileCleanup(fileId: string, expiresAt: Date) {
+function scheduleFileCleanup(fileId: string, expiresAt: Date, fileUrl: string) {
   const timeUntilExpiration = expiresAt.getTime() - Date.now()
 
   // Schedule deletion after the expiration time
   setTimeout(async () => {
     try {
-      // Delete the file from UploadThing
-      await utapi.deleteFiles(fileId)
+        await fetch("/api/uploadthing", {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              url: fileUrl, // full URL of the file
+            }),
+          });
+          
 
       // Remove from the uploaded files list
       uploadedFiles = uploadedFiles.filter((file) => file.fileId !== fileId)
@@ -82,7 +91,16 @@ export async function cleanupExpiredFiles() {
   for (const file of expiredFiles) {
     try {
       // Delete the file from UploadThing
-      await utapi.deleteFiles(file.fileId)
+      await fetch("/api/uploadthing", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          url: file.fileUrl, // full URL of the file
+        }),
+      });
+
       console.log(`Expired file ${file.fileId} deleted`)
     } catch (error) {
       console.error(`Error deleting expired file ${file.fileId}:`, error)

@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation"
 import { useCallback, useState } from "react"
 import { Card, CardContent } from "./ui/card"
 import { Label } from "./ui/label"
-import { UploadDropzone } from "@/lib/uploadthing-client"
 import { Textarea } from "./ui/textarea"
 import { Button } from "./ui/button"
 import { AnalysisDrawer } from "./analysis-drawer"
+import { UploadDropzone } from "@/lib/uploadthing"
 
 interface UploadThingUploaderProps {
   guestId: string

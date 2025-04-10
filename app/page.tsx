@@ -1,6 +1,9 @@
-import UploadThingUploader from "@/components/uploadthing-uploader"
-import { getGuestId } from "@/lib/cookies"
-import { redirect } from "next/navigation"
+
+import UploadThingUploader from "@/components/uploadthing-uploader";
+import { getGuestId } from "@/lib/cookies";
+import { UploadButton } from "@/lib/uploadthing";
+import { redirect } from "next/navigation";
+
 
 export default async function Home() {
   const guestId = await getGuestId()
@@ -24,5 +27,5 @@ export default async function Home() {
         </div>
       </div>
     </main>
-  )
+  );
 }
