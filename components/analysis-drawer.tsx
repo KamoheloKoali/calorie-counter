@@ -51,7 +51,7 @@ export function AnalysisDrawer({
           <DrawerTitle className="text-2xl flex justify-between">
             Meal Analysis Results
             <DrawerClose asChild>
-              <Button className="cursor-pointer" size="icon">
+              <Button className="cursor-pointer" size="icon" variant="outline">
                 <X className="h- w-5" />
               </Button>
             </DrawerClose>
