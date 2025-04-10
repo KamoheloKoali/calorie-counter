@@ -19,11 +19,11 @@ export const metadata = {
     title: 'Meal Calorie Analyzer',
     description:
       'Upload a meal photo and get a detailed nutritional analysis including calorie range, ingredient breakdown and macronutrient details.',
-    url: 'https://yourdomain.com', // Change this to your app’s domain
+    url: 'https://calorie-counter-sand.vercel.app', // Change this to your app’s domain
     siteName: 'Meal Calorie Analyzer',
     images: [
       {
-        url: 'https://yourdomain.com/og-image.png', // Update with your Open Graph image URL
+        url: 'https://7amlok8wz8.ufs.sh/f/InZPXqSP6Sj43KTWoYG8HEnpeVlcyR8ZTAuWfDIjgiMrkCxU', // Update with your Open Graph image URL
         width: 800,
         height: 600,
         alt: 'Meal Calorie Analyzer',
