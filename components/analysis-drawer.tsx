@@ -46,7 +46,7 @@ export function AnalysisDrawer({
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
-      <DrawerContent className="max-h-[90vh] lg:max-h-full">
+      <DrawerContent className="max-h-[90vh] mb-4">
         <DrawerHeader>
           <DrawerTitle className="text-2xl flex justify-between">
             Meal Analysis Results
@@ -122,10 +122,10 @@ export function AnalysisDrawer({
           )}
         </ScrollArea>
 
-        <DrawerFooter>
-          {/* <DrawerClose asChild>
-            <Button className="cursor-pointer">Close</Button>
-          </DrawerClose> */}
+        <DrawerFooter className="border">
+          <DrawerClose asChild>
+            <Button className="cursor-pointer ">Close</Button>
+          </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

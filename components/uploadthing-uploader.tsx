@@ -90,12 +90,14 @@ export default function UploadThingUploader({
                 <>
                   <div className="w-full flex justify-center">
                     <Image
-                      src={uploadedImageUrl || ""}
+                      src={uploadedImageUrl || "/placeholder.svg"}
                       style={{ objectFit: "cover" }}
                       height={300}
                       width={400}
                       alt="uploaded image"
                       className="rounded-md"
+                      placeholder="blur"
+                      blurDataURL="/placeholder.svg"
                     />
                   </div>
                   {/* <p className="text-sm text-green-600">
@@ -155,6 +157,7 @@ export default function UploadThingUploader({
               <Button
                 onClick={()=> setIsDrawerOpen(true)}
                 className="w-full cursor-pointer"
+                variant="outline"
               >
                   <span>Show Analysis</span>
               </Button>
