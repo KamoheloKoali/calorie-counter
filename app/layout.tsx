@@ -8,7 +8,7 @@ import { Toaster } from "@/components/ui/sonner";
 
 const font = DM_Sans({ subsets: ["latin"] });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Meal Calorie Analyzer',
   description:
     'Analyze your meal by uploading an image and receiving a detailed nutritional breakdown including calorie estimates and macronutrients.',
